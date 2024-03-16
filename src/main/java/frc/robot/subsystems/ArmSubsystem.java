@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -18,10 +18,12 @@ public class ArmSubsystem extends SubsystemBase {
 
   public enum ArmPos{kHome, kExtend, kMid};
 
-  private final CANSparkMax m_rear =
-    new CANSparkMax(ArmPivotConstants.kRearMotorPort, MotorType.kBrushless);
+  private final CANSparkMax m_right =
+    new CANSparkMax(ArmPivotConstants.kRightMotorPort, MotorType.kBrushless);
+  private final CANSparkMax m_left =
+    new CANSparkMax(ArmPivotConstants.kLeftMotorPort, MotorType.kBrushless);
 
-  private final RelativeEncoder m_rearEncoder = m_rear.getEncoder();
+  private final RelativeEncoder m_rightEncoder = m_right.getEncoder();
 
   // Using a TrapezoidProfile PIDController to allow for smooth turning
   private final ProfiledPIDController m_turningPIDController =
@@ -36,12 +38,21 @@ public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmPivotSubsystem. */
   public ArmSubsystem() {
 
-    m_rear.restoreFactoryDefaults();
+    m_right.restoreFactoryDefaults();
 
-    m_rear.setInverted(ArmPivotConstants.kRearMotorInverted);
-    m_rear.setIdleMode(ArmPivotConstants.kIdleMode);
-    m_rear.enableVoltageCompensation(ArmPivotConstants.maxVoltage);
-    m_rear.setSmartCurrentLimit(ArmPivotConstants.kCurrentLimit);
+    m_right.setInverted(ArmPivotConstants.kLeftMotorInverted);
+    m_right.setIdleMode(ArmPivotConstants.kIdleMode);
+    m_right.enableVoltageCompensation(ArmPivotConstants.maxVoltage);
+    m_right.setSmartCurrentLimit(ArmPivotConstants.kCurrentLimit);
+
+    m_left.restoreFactoryDefaults();
+
+    m_left.setInverted(ArmPivotConstants.kLeftMotorInverted);
+    m_left.setIdleMode(ArmPivotConstants.kIdleMode);
+    m_left.enableVoltageCompensation(ArmPivotConstants.maxVoltage);
+    m_left.setSmartCurrentLimit(ArmPivotConstants.kCurrentLimit);
+
+    m_left.follow(m_right);
 
     resetEncoders();
 
@@ -57,7 +68,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void resetEncoders() {
 
-    m_rearEncoder.setPosition(0);
+    m_rightEncoder.setPosition(0);
   }
 
   /** Gets the current angle of the arm.
@@ -68,7 +79,7 @@ public class ArmSubsystem extends SubsystemBase {
    * @implNote ArmPivotConstants.kEncoderRevToArmRads
    */
   public double getAngle() {
-    return m_rearEncoder.getPosition() * ArmPivotConstants.kEncoderRevToArmRads;
+    return m_rightEncoder.getPosition() * ArmPivotConstants.kEncoderRevToArmRads;
   }
 
   /** Sets target angle of the arm.
@@ -83,7 +94,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void setAngle(double tarAngle) {
     double output = m_turningPIDController.calculate(getAngle(), tarAngle);
-    m_rear.set(output);
+    m_right.set(output);
   }
 
   /** Stops the arm motor.
@@ -95,7 +106,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void stopMotors() {
 
-    m_rear.stopMotor();
+    m_right.stopMotor();
   }
 
   @Override

@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,23 +16,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public enum intakeDir {kIn, kOut, kOff};
 
-  private final CANSparkMax m_left =
-    new CANSparkMax(IntakeConstants.kLeftMotorPort, MotorType.kBrushless);
   private final CANSparkMax m_right =
     new CANSparkMax(IntakeConstants.kRightMotorPort, MotorType.kBrushless);
 
-  private final RelativeEncoder e_LeftEncoder = m_left.getEncoder();
   private final RelativeEncoder e_RightEncoder = m_right.getEncoder();
   
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
-
-    m_left.restoreFactoryDefaults();
-    m_left.setInverted(IntakeConstants.kLeftMotorIntverted);
-    m_left.setIdleMode(IntakeConstants.kIdleMode);
-    m_left.setSmartCurrentLimit(IntakeConstants.kCurrentLimit);
-    m_left.setOpenLoopRampRate(IntakeConstants.kOpenLoopRampRate);
-    m_left.enableVoltageCompensation(IntakeConstants.maxVoltage);
   
     m_right.restoreFactoryDefaults();
     m_right.setInverted(IntakeConstants.kRightMotorInverted);
@@ -50,7 +40,6 @@ public class IntakeSubsystem extends SubsystemBase {
    * 
    */
   public void setTargetOutput(double output) {
-    m_left.set(output);
     m_right.set(output);
   }
 
@@ -86,7 +75,7 @@ public class IntakeSubsystem extends SubsystemBase {
    * 
    */
   public double getIntakeVel() {
-    return (e_LeftEncoder.getVelocity() + e_RightEncoder.getVelocity())/2;
+    return e_RightEncoder.getVelocity();
   }
 
   /** Stops the left and right motors.
@@ -97,7 +86,6 @@ public class IntakeSubsystem extends SubsystemBase {
    * 
    */
   public void stopMotors() {
-    m_left.stopMotor();
     m_right.stopMotor();
   }
 
@@ -109,8 +97,6 @@ public class IntakeSubsystem extends SubsystemBase {
    * 
    */
   public void resetEncoders() {
-
-    e_LeftEncoder.setPosition(0);
     e_RightEncoder.setPosition(0);
   }
 

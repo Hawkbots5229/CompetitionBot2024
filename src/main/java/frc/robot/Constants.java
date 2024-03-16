@@ -151,10 +151,8 @@ public final class Constants {
 
   public static class IntakeConstants{
 
-    public static final int kLeftMotorPort = 22;
     public static final int kRightMotorPort = 23;
 
-    public static final boolean kLeftMotorIntverted = false;
     public static final boolean kRightMotorInverted = true;
     public static final IdleMode kIdleMode = IdleMode.kBrake;
     public static final double maxVoltage = 12.0;
@@ -170,15 +168,17 @@ public final class Constants {
 
   public static class ArmPivotConstants {
 
-    public static final int kRearMotorPort = 20;
+    public static final int kRightMotorPort = 20;
+    public static final int kLeftMotorPort = 21;
 
-    public static final boolean kRearMotorInverted = true;
+    public static final boolean kRightMotorInverted = true;
+    public static final boolean kLeftMotorInverted = false;
     public static final IdleMode kIdleMode = IdleMode.kCoast;
     public static final double maxVoltage = 12.0;
     public static final int kCurrentLimit = 40;
     public static final double kOpenLoopRampRate = 10;
    
-    public static final double kGearBoxRatio = (1/100.0);
+    public static final double kGearBoxRatio = (1/70.0);
     public static final double kSprocketRatio = (22.0/60.0); 
     public static final double kEncoderRevToArmRads = kGearBoxRatio*kSprocketRatio*2*Math.PI;
 
@@ -193,5 +193,27 @@ public final class Constants {
     public static final double kHomeLoc = 0.0;
     public static final double kExtendLoc = 129.0;
     public static final double kMidLoc = 60.0;
+  }
+
+  public static class ClimbConstants {
+    public static final int kRightMotorPort = 20;
+    public static final int kLeftMotorPort = 21;
+
+    public static final boolean kRightMotorInverted = true;
+    public static final boolean kLeftMotorInverted = false;
+    public static final IdleMode kIdleMode = IdleMode.kCoast;
+    public static final double maxVoltage = 12.0;
+    public static final int kCurrentLimit = 40;
+  }
+
+    public static class ShooterConstants {
+    public static final int kRightMotorPort = 20;
+    public static final int kLeftMotorPort = 21;
+
+    public static final boolean kRightMotorInverted = true;
+    public static final boolean kLeftMotorInverted = false;
+    public static final IdleMode kIdleMode = IdleMode.kCoast;
+    public static final double maxVoltage = 12.0;
+    public static final int kCurrentLimit = 40;
   }
 }
