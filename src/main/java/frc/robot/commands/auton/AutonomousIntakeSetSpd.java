@@ -5,10 +5,10 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class AutonomousIntakeSetSpd extends CommandBase {
+public class AutonomousIntakeSetSpd extends Command {
 
   private final Timer tmr = new Timer();
   private final IntakeSubsystem s_intake;

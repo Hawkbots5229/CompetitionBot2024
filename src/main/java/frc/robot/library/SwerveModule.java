@@ -11,24 +11,23 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.Constants.SwerveConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.AbsoluteSensorRange;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.revrobotics.CANSparkBase.IdleMode;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.InvertedValue;
 
 import frc.robot.Constants.DriveConstants;;
 
 public class SwerveModule {
 
-  private final WPI_TalonFX m_driveMotor;
-  private final WPI_TalonFX m_turningMotor;
-  private final CANCoder m_turningEncoderAbs;
+  private final TalonFX m_driveMotor;
+  private final TalonFX m_turningMotor;
+  private final CANcoder m_turningEncoderAbs;
   private final SwerveData m_swerveData;
+  private final VoltageOut vo_driveMotor;
+  private final VoltageOut vo_turningMotor;
 
   // Using a TrapezoidProfile PIDController to allow for smooth turning
   private final ProfiledPIDController m_turningPIDController =
@@ -46,31 +45,44 @@ public class SwerveModule {
    */
   public SwerveModule(SwerveData swerveData) {
 
+
     m_swerveData = swerveData;
-    m_driveMotor = new WPI_TalonFX(swerveData.driveCANId, DriveConstants.kCanBus);
-    m_turningMotor = new WPI_TalonFX(swerveData.steerCANId, DriveConstants.kCanBus);
+    m_driveMotor = new TalonFX(swerveData.driveCANId, DriveConstants.kCanBus);
+    m_turningMotor = new TalonFX(swerveData.steerCANId, DriveConstants.kCanBus);
+
+    vo_driveMotor = new VoltageOut(0.0);
+    vo_turningMotor = new VoltageOut(0.0);
+
+    
 
     if(swerveData.useAbsEnc) {
-      m_turningEncoderAbs = new CANCoder(swerveData.encoderCANId, DriveConstants.kCanBus);
-      m_turningEncoderAbs.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
-      m_turningEncoderAbs.configSensorDirection(swerveData.steerEncoderInvert);
+      m_turningEncoderAbs = new CANcoder(swerveData.encoderCANId, DriveConstants.kCanBus);
+      CANcoderConfiguration cfg_turningEncoderAbs = new CANcoderConfiguration();
+      cfg_turningEncoderAbs.MagnetSensor.MagnetOffset = swerveData.steerAngleOffset;
+      m_turningEncoderAbs.getConfigurator().apply(cfg_turningEncoderAbs);
     }
     else {
       m_turningEncoderAbs = null;
     }
 
-    m_driveMotor.configFactoryDefault();
-    m_driveMotor.setInverted(swerveData.driveMotorInvert);
-    m_driveMotor.configVoltageCompSaturation(DriveConstants.maxVoltage);
-    m_driveMotor.enableVoltageCompensation(true);
-    m_driveMotor.setNeutralMode(DriveConstants.driveMode);
-    m_driveMotor.setSelectedSensorPosition(0);
-    m_driveMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, DriveConstants.kCurrentLimit, 80, 0.5));
-    m_driveMotor.configOpenloopRamp(DriveConstants.kOpenLoopRampRate);
+    TalonFXConfiguration cfg_driveMotor = new TalonFXConfiguration();
+    cfg_driveMotor.MotorOutput.Inverted = 
+      swerveData.driveMotorInvert
+      ? InvertedValue.Clockwise_Positive
+      : InvertedValue.CounterClockwise_Positive;
 
-    m_turningMotor.configFactoryDefault();
-    m_turningMotor.configVoltageCompSaturation(DriveConstants.maxVoltage);
-    m_turningMotor.setInverted(swerveData.steerMotorInvert);
+    m_driveMotor.setNeutralMode(DriveConstants.driveMode);
+    m_driveMotor.getConfigurator().apply(cfg_driveMotor);
+  
+    TalonFXConfiguration cfg_turningMotor = new TalonFXConfiguration();
+    cfg_driveMotor.MotorOutput.Inverted = 
+      swerveData.driveMotorInvert
+      ? InvertedValue.Clockwise_Positive
+      : InvertedValue.CounterClockwise_Positive;
+
+    m_turningMotor.setNeutralMode(DriveConstants.turnMode);
+    m_turningMotor.getConfigurator().apply(cfg_turningMotor);
+  
     m_turningMotor.setNeutralMode(DriveConstants.turnMode);
 
     // Limit the PID Controller's input range between -pi and pi and set the input to be continuous. 
@@ -82,21 +94,21 @@ public class SwerveModule {
    * 
    * @return Angle (Radians)
    * @param None
-   * @implNote com.ctre.phoenix.sensors.CANCoder.getAbsolutePosition()
+   * @implNote com.ctre.phoenix.sensors.CANcoder.getAbsolutePosition()
    */
   public double getSwerveAngle(){
-    return Math.toRadians(m_turningEncoderAbs.getAbsolutePosition());
+    return Math.toRadians(m_turningEncoderAbs.getAbsolutePosition().getValueAsDouble());
   }
 
   /** Gets the relative position of the swerve wheels.
    * 
    * @return Angle (Revolutions)
    * @param None
-   * @implNote com.ctre.phoenix.sensors.CANCoder.getAbsolutePosition()
+   * @implNote com.ctre.phoenix.sensors.CANcoder.getAbsolutePosition()
    * @implNote 2048 raw sensor units per revolution
    */
   public double getSteerAngle(){
-    return m_turningMotor.getSelectedSensorPosition()/2048.0;
+    return m_turningMotor.getPosition().getValueAsDouble()/2048.0;
   }
 
   /** Resets the drive motor encoders to a position of 0.
@@ -106,7 +118,7 @@ public class SwerveModule {
    * @implNote com.ctre.phoenix.motorcontrol.can.BaseMotorController.setSelectedSensorPosition()
    */
   public void resetDriveEncoders(){
-    m_driveMotor.setSelectedSensorPosition(0);
+    m_driveMotor.setPosition(0);
   }
 
   /** Sets the relative steering motor encoders to the absolute position or
@@ -121,10 +133,10 @@ public class SwerveModule {
    */
   public void resetSteerSensors(){
     if(m_swerveData.useAbsEnc) {
-      m_turningMotor.setSelectedSensorPosition((getSwerveAngle()- Math.toRadians(m_swerveData.steerAngleOffset))*SwerveConstants.steer_CntsPRad*2048.0);
+      m_turningMotor.setPosition((getSwerveAngle()- Math.toRadians(m_swerveData.steerAngleOffset))*SwerveConstants.steer_CntsPRad*2048.0);
     }
     else {
-      m_turningMotor.setSelectedSensorPosition(0);
+      m_turningMotor.setPosition(0);
     }
   }
 
@@ -148,7 +160,7 @@ public class SwerveModule {
    * @implNote SwerveConstants.driveDistanceCntsPMeter
    */
   public double getDriveDistanceMeters(){
-    final double dis = m_driveMotor.getSelectedSensorPosition();
+    final double dis = m_driveMotor.getPosition().getValueAsDouble();
     final double meters = dis / SwerveConstants.driveDistanceCntsPMeter;
     return Math.abs(meters);
   }
@@ -172,7 +184,7 @@ public class SwerveModule {
    * @implNote SwerveConstants.driveRawVelocityToMPS
    */
   public double getDriveVelocity(){
-    double vel1 = m_driveMotor.getSelectedSensorVelocity();
+    double vel1 = m_driveMotor.getVelocity().getValueAsDouble();
     double velocity = vel1 / SwerveConstants.driveRawVelocityToMPS;
     return velocity;
   }
@@ -192,7 +204,7 @@ public class SwerveModule {
    * 
    * @return Void
    * @param None
-   * @implNote com.ctre.phoenix.motorcontrol.can.WPI_TalonFX.stopMotor()
+   * @implNote com.ctre.phoenix.motorcontrol.can.TalonFX.stopMotor()
    * @implNote com.revrobotics.CANSparkMax.stopMotor()
    */
   public void stopMotors(){
@@ -248,7 +260,7 @@ public class SwerveModule {
     }
 
     if(!disableDrive){
-      m_driveMotor.set(ControlMode.PercentOutput, state.speedMetersPerSecond / DriveConstants.maxSpeed);
+      m_driveMotor.set(state.speedMetersPerSecond / DriveConstants.maxSpeed);
     }
     // Calculate the turning motor output from the turning PID controller.
     if(!disableSteer){
@@ -264,7 +276,7 @@ public class SwerveModule {
    */
   public void sendData(){
     SmartDashboard.putNumber(m_swerveData.name + "SteerMotorAngle", getSteerAngle());
-    SmartDashboard.putNumber(m_swerveData.name + "CANCoderAngle", Math.toDegrees(getSwerveAngle()));
+    SmartDashboard.putNumber(m_swerveData.name + "CANcoderAngle", Math.toDegrees(getSwerveAngle()));
     SmartDashboard.putNumber(m_swerveData.name + "DriveDistance", getDriveDistanceInches());
     SmartDashboard.putNumber(m_swerveData.name + "DriveVelocity", getDriveVelocity());
   }

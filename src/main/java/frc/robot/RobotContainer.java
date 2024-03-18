@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -46,7 +45,7 @@ public class RobotContainer {
   public RobotContainer() {
 
     // Create camera servers
-    CameraServer.startAutomaticCapture("Claw Camera", 0);
+    //CameraServer.startAutomaticCapture("Claw Camera", 0);
     CameraServer.startAutomaticCapture("Drive Camera", 1);
     
     // Configure the button bindings
@@ -67,13 +66,14 @@ public class RobotContainer {
   private void configureBindings() {
 
     // Intake Wheels: PovUp-Out PovDown-In
+    
     new POVButton(m_mechController, OIConstants.kUpDPad)
       .onTrue(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kIn))
       .onFalse(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kOff));     
     new POVButton(m_mechController, OIConstants.kDownDPad)
       .onTrue(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kOut))
       .onFalse(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kOff));
-
+    
     // Arm: Y-Up Position A-Down Position X-Middle Position
     new JoystickButton(m_mechController, Button.kY.value)
       .onTrue(new ArmSetPosCommand(ArmSubsystem.ArmPos.kHome));
@@ -81,6 +81,7 @@ public class RobotContainer {
       .onTrue(new ArmSetPosCommand(ArmSubsystem.ArmPos.kExtend));
     new JoystickButton(m_mechController, Button.kX.value)
       .onTrue(new ArmSetPosCommand(ArmSubsystem.ArmPos.kMid));
+    
   }
 
   public Command getAutonomousCommand() {

@@ -4,11 +4,11 @@
 
 package frc.robot.commands.auton;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class AutonomousArmSetPos extends CommandBase {
+public class AutonomousArmSetPos extends Command {
 
   private final ArmSubsystem s_robotArm;
   private final ArmSubsystem.ArmPos pos;

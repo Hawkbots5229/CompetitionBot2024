@@ -4,12 +4,12 @@
 
 package frc.robot.commands.dflt;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmPivotConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmDefaultCommand extends CommandBase {
+public class ArmDefaultCommand extends Command {
 
   ArmSubsystem s_robotArm;
 

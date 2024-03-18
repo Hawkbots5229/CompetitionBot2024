@@ -7,12 +7,12 @@ package frc.robot.commands.dflt;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;;
 
-public class DrivetrainDefaultCommand extends CommandBase {
+public class DrivetrainDefaultCommand extends Command {
     // Slew rate limiters to make joystick inputs more gentle; 1/2 sec from 0 to 1.
     private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(10);
     private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(10);

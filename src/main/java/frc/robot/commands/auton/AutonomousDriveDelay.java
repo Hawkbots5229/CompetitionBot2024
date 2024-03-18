@@ -5,10 +5,10 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class AutonomousDriveDelay extends CommandBase {
+public class AutonomousDriveDelay extends Command {
   private final Timer tmr = new Timer();
   private final double delay;
   private final DrivetrainSubsystem s_robotDrive;

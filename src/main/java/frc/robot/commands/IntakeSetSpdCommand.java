@@ -4,10 +4,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeSetSpdCommand extends CommandBase {
+public class IntakeSetSpdCommand extends Command {
 
   private final IntakeSubsystem s_robotIntake;
   private final IntakeSubsystem.intakeDir direction;

@@ -4,10 +4,10 @@
 
 package frc.robot.commands.dflt;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeDefaultCommand extends CommandBase {
+public class IntakeDefaultCommand extends Command {
 
   IntakeSubsystem s_robotIntake;
 
