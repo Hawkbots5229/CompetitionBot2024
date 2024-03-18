@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkBase.IdleMode;
 
@@ -56,9 +55,9 @@ public final class Constants {
     public static final boolean kRearRightTurningEncoderReversed = false;
 
     // Distance between centers of right and left wheels on robot
-    public static final double kTrackWidth = 0.43815;
+    public static final double kTrackWidth = 0.65405;
     // Distance between front and back wheels on robot
-    public static final double kWheelBase = 0.65405;
+    public static final double kWheelBase = 0.43815;
     
     public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(

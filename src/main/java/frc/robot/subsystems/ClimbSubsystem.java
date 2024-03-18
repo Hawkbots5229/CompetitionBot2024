@@ -87,6 +87,7 @@ public class ClimbSubsystem extends SubsystemBase {
    */
   public void setTargetOutput(double output) {
     m_right.set(output);
+    m_left.set(output);
   }
 
   @Override

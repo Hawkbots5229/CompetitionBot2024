@@ -40,6 +40,17 @@ public class ShooterSubsystem extends SubsystemBase {
     m_left.follow(m_right);
   }
 
+   /** Sets the desired speed of the shooter motors.
+   * 
+   * @return Void
+   * @param output The speed to set. Value should be between -1.0 and 1.0.
+   * @implNote com.revrobotics.CANSparkMax.set()
+   * 
+   */
+  public void setTargetOutput(double output) {
+    m_right.set(output);
+  }
+
 /** Gets the current angle of the shooter.
  * 
  * @return Current arm angle (Radians)

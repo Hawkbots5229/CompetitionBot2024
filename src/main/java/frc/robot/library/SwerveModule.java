@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.VoltageOut;
+//import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.InvertedValue;
 
@@ -26,8 +26,8 @@ public class SwerveModule {
   private final TalonFX m_turningMotor;
   private final CANcoder m_turningEncoderAbs;
   private final SwerveData m_swerveData;
-  private final VoltageOut vo_driveMotor;
-  private final VoltageOut vo_turningMotor;
+  //private final VoltageOut vo_driveMotor;
+  //private final VoltageOut vo_turningMotor;
 
   // Using a TrapezoidProfile PIDController to allow for smooth turning
   private final ProfiledPIDController m_turningPIDController =
@@ -50,10 +50,8 @@ public class SwerveModule {
     m_driveMotor = new TalonFX(swerveData.driveCANId, DriveConstants.kCanBus);
     m_turningMotor = new TalonFX(swerveData.steerCANId, DriveConstants.kCanBus);
 
-    vo_driveMotor = new VoltageOut(0.0);
-    vo_turningMotor = new VoltageOut(0.0);
-
-    
+    //vo_driveMotor = new VoltageOut(0.0);
+    //vo_turningMotor = new VoltageOut(0.0);
 
     if(swerveData.useAbsEnc) {
       m_turningEncoderAbs = new CANcoder(swerveData.encoderCANId, DriveConstants.kCanBus);
