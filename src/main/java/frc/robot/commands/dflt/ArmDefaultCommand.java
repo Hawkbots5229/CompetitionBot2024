@@ -11,7 +11,7 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmDefaultCommand extends Command {
 
-  ArmSubsystem s_robotArm;
+  private final ArmSubsystem s_robotArm;
 
   /** Creates a new Arm Default Command. 
    * This command holds the arm at the desired location set in by the ArmSetPosCommand.
