@@ -19,8 +19,7 @@ import frc.robot.commands.dflt.IntakeDefaultCommand;
 import frc.robot.library.ArmController;
 import frc.robot.commands.ArmSetPosCommand;
 import frc.robot.commands.IntakeSetSpdCommand;
-//import frc.robot.commands.auton.tasks.AutonomousBalance;
-//import frc.robot.commands.auton.tasks.AutonomousCrossLine;
+import frc.robot.commands.auton.tasks.AutonomousCrossLine;
 import frc.robot.commands.auton.tasks.AutonomousDontMove;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -46,15 +45,14 @@ public class RobotContainer {
 
     // Create camera servers
     //CameraServer.startAutomaticCapture("Claw Camera", 0);
-    CameraServer.startAutomaticCapture("Drive Camera", 1);
+    //CameraServer.startAutomaticCapture("Drive Camera", 1);
     
     // Configure the button bindings
     configureBindings();
 
     // Setup SmartDashboard Auton options
     sc_autonSelect.setDefaultOption("Don't Move", new AutonomousDontMove(m_robotDrive, m_robotIntake));
-    //sc_autonSelect.addOption("Balance", new AutonomousBalance(m_robotDrive, m_robotIntake));
-    //sc_autonSelect.addOption("CrossLine", new AutonomousCrossLine(m_robotDrive, m_robotIntake));
+    sc_autonSelect.addOption("CrossLine", new AutonomousCrossLine(m_robotDrive, m_robotIntake));
     SmartDashboard.putData("Auton Selection", sc_autonSelect);
 
     // Configure default commands

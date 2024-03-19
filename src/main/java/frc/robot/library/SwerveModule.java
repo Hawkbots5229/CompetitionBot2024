@@ -16,7 +16,9 @@ import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 //import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import frc.robot.Constants.DriveConstants;;
 
@@ -53,15 +55,17 @@ public class SwerveModule {
     //vo_driveMotor = new VoltageOut(0.0);
     //vo_turningMotor = new VoltageOut(0.0);
 
-    if(swerveData.useAbsEnc) {
-      m_turningEncoderAbs = new CANcoder(swerveData.encoderCANId, DriveConstants.kCanBus);
-      CANcoderConfiguration cfg_turningEncoderAbs = new CANcoderConfiguration();
-      cfg_turningEncoderAbs.MagnetSensor.MagnetOffset = swerveData.steerAngleOffset;
-      m_turningEncoderAbs.getConfigurator().apply(cfg_turningEncoderAbs);
-    }
-    else {
-      m_turningEncoderAbs = null;
-    }
+    m_turningEncoderAbs = new CANcoder(swerveData.encoderCANId, DriveConstants.kCanBus);
+    CANcoderConfiguration cfg_turningEncoderAbs = new CANcoderConfiguration();
+    cfg_turningEncoderAbs.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1; 
+    cfg_turningEncoderAbs.MagnetSensor.SensorDirection = 
+      swerveData.steerEncoderInvert
+      ? SensorDirectionValue.Clockwise_Positive
+      : SensorDirectionValue.CounterClockwise_Positive;
+    cfg_turningEncoderAbs.MagnetSensor.MagnetOffset = swerveData.steerAngleOffset;
+    //cfg_turningEncoderAbs.MagnetSensor.MagnetOffset = 0.0;
+    m_turningEncoderAbs.getConfigurator().apply(cfg_turningEncoderAbs);
+  
 
     TalonFXConfiguration cfg_driveMotor = new TalonFXConfiguration();
     cfg_driveMotor.MotorOutput.Inverted = 
@@ -95,7 +99,9 @@ public class SwerveModule {
    * @implNote com.ctre.phoenix.sensors.CANcoder.getAbsolutePosition()
    */
   public double getSwerveAngle(){
-    return Math.toRadians(m_turningEncoderAbs.getAbsolutePosition().getValueAsDouble());
+    
+    //return (m_turningEncoderAbs.getAbsolutePosition().getValueAsDouble()*2.0*Math.PI);
+    return (m_turningEncoderAbs.getAbsolutePosition().getValueAsDouble());
   }
 
   /** Gets the relative position of the swerve wheels.
@@ -103,20 +109,20 @@ public class SwerveModule {
    * @return Angle (Revolutions)
    * @param None
    * @implNote com.ctre.phoenix.sensors.CANcoder.getAbsolutePosition()
-   * @implNote 2048 raw sensor units per revolution
    */
-  public double getSteerAngle(){
-    return m_turningMotor.getPosition().getValueAsDouble()/2048.0;
+  public double getSteerMotorAngle(){
+    return m_turningMotor.getPosition().getValueAsDouble();
   }
 
-  /** Resets the drive motor encoders to a position of 0.
+  /** Gets the angle of the drive wheel
    * 
-   * @return Void
+   * @return Angle (Radians)
    * @param None
-   * @implNote com.ctre.phoenix.motorcontrol.can.BaseMotorController.setSelectedSensorPosition()
+   * @implNote getSteerMotorAngle
+   * @implNote SwerveConstants.steer_CntsPRad
    */
-  public void resetDriveEncoders(){
-    m_driveMotor.setPosition(0);
+  public double getSteerAngle(){
+      return getSteerMotorAngle() / SwerveConstants.steer_RevPRad;   
   }
 
   /** Sets the relative steering motor encoders to the absolute position or
@@ -127,15 +133,26 @@ public class SwerveModule {
    * @implNote com.ctre.phoenix.motorcontrol.can.BaseMotorController.setSelectedSensorPosition()
    * @implNote getSwerveAngle()
    * @implNote SwerveConstants.steer_CntsPRad
-   * @implNote 2048 raw senor units per rev
    */
   public void resetSteerSensors(){
-    if(m_swerveData.useAbsEnc) {
-      m_turningMotor.setPosition((getSwerveAngle()- Math.toRadians(m_swerveData.steerAngleOffset))*SwerveConstants.steer_CntsPRad*2048.0);
-    }
-    else {
-      m_turningMotor.setPosition(0);
-    }
+    //if(m_swerveData.useAbsEnc) {
+    //  m_turningMotor.setPosition((getSwerveAngle() - Math.toRadians(m_swerveData.steerAngleOffset))*SwerveConstants.steer_RevPRad);
+    //}
+    //else {
+    //  m_turningMotor.setPosition(0);
+    //}
+    System.out.println(m_swerveData.name + "inti value: " + getSwerveAngle());
+     m_turningMotor.setPosition(getSwerveAngle()*SwerveConstants.steerRatio);
+  }
+
+  /** Resets the drive motor encoders to a position of 0.
+   * 
+   * @return Void
+   * @param None
+   * @implNote com.ctre.phoenix.motorcontrol.can.BaseMotorController.setSelectedSensorPosition()
+   */
+  public void resetDriveEncoders(){
+    m_driveMotor.setPosition(0);
   }
 
   /** Resets both the relative drive and steering motor encoders
@@ -187,17 +204,6 @@ public class SwerveModule {
     return velocity;
   }
 
-  /** Gets the angle of the drive wheel
-   * 
-   * @return Angle (Radians)
-   * @param None
-   * @implNote getSteerAngle
-   * @implNote SwerveConstants.steer_CntsPRad
-   */
-  public double getSteerMotorAngle(){
-      return getSteerAngle() / SwerveConstants.steer_CntsPRad;   
-  }
-
    /** Stop drive and steering motors
    * 
    * @return Void
@@ -217,11 +223,11 @@ public class SwerveModule {
    * @implNote edu.wpi.first.math.kinematics.SwerveModulePosition()
    * @implNote edu.wpi.first.math.geometry.Rotation2d()
    * @implNote getDriveDistanceMeters()
-   * @implNote getSteerMotorAngle()
+   * @implNote getSteerAngle()
    */
   public SwerveModulePosition getPosition() {
     return new SwerveModulePosition(
-      getDriveDistanceMeters(), new Rotation2d(getSteerMotorAngle()));
+      getDriveDistanceMeters(), new Rotation2d(getSteerAngle()));
   }
 
   /** Returns the current state of the swerve module as a swerve module state structure.
@@ -234,7 +240,7 @@ public class SwerveModule {
    */
   public SwerveModuleState getState() {
     return new SwerveModuleState(
-      getDriveVelocity(), new Rotation2d(getSteerMotorAngle()));
+      getDriveVelocity(), new Rotation2d(getSteerAngle()));
   }
 
   /** Sets the desired state for the module.
@@ -252,7 +258,7 @@ public class SwerveModule {
     // Optimize the reference state to avoid spinning further than 90 degrees
     SwerveModuleState state;
     if(optimize){
-        state = SwerveModuleState.optimize(desiredState, new Rotation2d(getSteerMotorAngle()));
+        state = SwerveModuleState.optimize(desiredState, new Rotation2d(getSteerAngle()));
     }else{
         state = desiredState;
     }
@@ -262,7 +268,7 @@ public class SwerveModule {
     }
     // Calculate the turning motor output from the turning PID controller.
     if(!disableSteer){
-        steerOutput = m_turningPIDController.calculate(getSteerMotorAngle(), state.angle.getRadians());
+        steerOutput = m_turningPIDController.calculate(getSteerAngle(), state.angle.getRadians());
         m_turningMotor.set(steerOutput);
     }
   }
@@ -273,8 +279,9 @@ public class SwerveModule {
    * @param None
    */
   public void sendData(){
-    SmartDashboard.putNumber(m_swerveData.name + "SteerMotorAngle", getSteerAngle());
-    SmartDashboard.putNumber(m_swerveData.name + "CANcoderAngle", Math.toDegrees(getSwerveAngle()));
+    SmartDashboard.putNumber(m_swerveData.name + "SteerMotorAngle", getSteerMotorAngle());
+    SmartDashboard.putNumber(m_swerveData.name + "CANcoderAngle", getSwerveAngle());
+    SmartDashboard.putNumber(m_swerveData.name + "WheelAngle", Math.toDegrees(getSteerAngle()));
     SmartDashboard.putNumber(m_swerveData.name + "DriveDistance", getDriveDistanceInches());
     SmartDashboard.putNumber(m_swerveData.name + "DriveVelocity", getDriveVelocity());
   }

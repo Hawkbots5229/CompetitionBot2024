@@ -39,20 +39,20 @@ public final class Constants {
     public static final int kFrontRightTurningMotorPort = 33;
     public static final int kRearRightTurningMotorPort = 31;
 
-    public static final boolean kFrontLeftTurningMotorReversed = true;
-    public static final boolean kRearLeftTurningMotorReversed = true;
-    public static final boolean kFrontRightTurningMotorReversed = true;
-    public static final boolean kRearRightTurningMotorReversed = true;
+    public static final boolean kFrontLeftTurningMotorReversed = false;
+    public static final boolean kRearLeftTurningMotorReversed = false;
+    public static final boolean kFrontRightTurningMotorReversed = false;
+    public static final boolean kRearRightTurningMotorReversed = false;
 
     public static final int kFrontLeftTurningEncoderPorts = 52;
     public static final int kRearLeftTurningEncoderPorts = 50;
     public static final int kFrontRightTurningEncoderPorts = 53;
     public static final int kRearRightTurningEncoderPorts = 51;
 
-    public static final boolean kFrontLeftTurningEncoderReversed = false;
-    public static final boolean kRearLeftTurningEncoderReversed = false;
-    public static final boolean kFrontRightTurningEncoderReversed = false;
-    public static final boolean kRearRightTurningEncoderReversed = false;
+    public static final boolean kFrontLeftTurningEncoderReversed = true;
+    public static final boolean kRearLeftTurningEncoderReversed = true;
+    public static final boolean kFrontRightTurningEncoderReversed = true;
+    public static final boolean kRearRightTurningEncoderReversed = true;
 
     // Distance between centers of right and left wheels on robot
     public static final double kTrackWidth = 0.65405;
@@ -86,6 +86,8 @@ public final class Constants {
 
     public static final boolean kGyroReversed = true;
 
+    public static final boolean kuseAbsEnc = true;
+
     public static final SwerveData SDFrontLeft = new SwerveData("FL", 
     kFrontLeftDriveMotorPort, 
     kFrontLeftDriveMotorReversed, 
@@ -93,8 +95,18 @@ public final class Constants {
     kFrontLeftTurningMotorReversed, 
     kFrontLeftTurningEncoderPorts,
     kFrontLeftTurningEncoderReversed,
-    304, //56
-    true);
+    -0.398, //-0.6
+    kuseAbsEnc);
+
+    public static final SwerveData SDFrontRight = new SwerveData("FR", 
+    kFrontRightDriveMotorPort, 
+    kFrontRightDriveMotorReversed, 
+    kFrontRightTurningMotorPort, 
+    kFrontRightTurningMotorReversed, 
+    kFrontRightTurningEncoderPorts,
+    kFrontRightTurningEncoderReversed,
+    -0.970, //-0.029
+    kuseAbsEnc);
 
   public static final SwerveData SDRearLeft = new SwerveData("RL", 
     kRearLeftDriveMotorPort, 
@@ -103,18 +115,8 @@ public final class Constants {
     kRearLeftTurningMotorReversed, 
     kRearLeftTurningEncoderPorts,
     kRearLeftTurningEncoderReversed,
-    290, //69
-    true);
-
-  public static final SwerveData SDFrontRight = new SwerveData("FR", 
-    kFrontRightDriveMotorPort, 
-    kFrontRightDriveMotorReversed, 
-    kFrontRightTurningMotorPort, 
-    kFrontRightTurningMotorReversed, 
-    kFrontRightTurningEncoderPorts,
-    kFrontRightTurningEncoderReversed,
-    357, //2.7
-    true);
+    -0.370, //-0.627
+    kuseAbsEnc);
 
   public static final SwerveData SDRearRight = new SwerveData("RR", 
     kRearRightDriveMotorPort, 
@@ -123,8 +125,8 @@ public final class Constants {
     kRearRightTurningMotorReversed, 
     kRearRightTurningEncoderPorts, 
     kRearRightTurningEncoderReversed,
-    328, //32
-    true);
+    -0.895, //-0.122
+    kuseAbsEnc);
   }
 
   public static final class SwerveConstants {
@@ -135,7 +137,9 @@ public final class Constants {
 
     public static final double steerMax_RadPS = Math.PI;
     public static final double steerMax_RadPSSq = Math.pow(steerMax_RadPS,2);
-    public static final double steer_CntsPRad = 13.7/(2.0*Math.PI);
+    public static final double steerRatio = 396.0/35.0; // Per Westcoast products website
+    public static final double steer_RevPRad = steerRatio/(2.0*Math.PI); 
+    
     
     public static final double driveDistanceCntsPMeter = 49907;
     public static final double driveRawVelocityToMPS = 4990.68;

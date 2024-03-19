@@ -45,7 +45,7 @@ public class DrivetrainDefaultCommand extends Command {
         // Get the x speed. We are inverting this because Xbox controllers return
     // negative values when we push forward.
      var xSpeed =
-        -m_xspeedLimiter.calculate(MathUtil.applyDeadband(RobotContainer.m_driverController.getLeftY(), DriveConstants.stickDeadband))
+        m_xspeedLimiter.calculate(MathUtil.applyDeadband(RobotContainer.m_driverController.getLeftY(), DriveConstants.stickDeadband))
             * DriveConstants.maxSpeed;
 
     // Get the y speed or sideways/strafe speed. We are inverting this because

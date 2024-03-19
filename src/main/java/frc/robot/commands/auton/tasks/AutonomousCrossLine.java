@@ -7,7 +7,6 @@ package frc.robot.commands.auton.tasks;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.auton.AutonomousDriveDistance;
 import frc.robot.commands.auton.AutonomousDriveStop;
-import frc.robot.commands.auton.AutonomousIntakeSetSpd;
 import frc.robot.commands.auton.AutonomousResetEncoders;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -28,7 +27,6 @@ public class AutonomousCrossLine extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutonomousResetEncoders(s_robotDrive),
-      new AutonomousIntakeSetSpd(s_intake, -1.0, 2.0),
       new AutonomousDriveDistance(s_robotDrive, 150, 0.8),
       new AutonomousDriveStop(s_robotDrive)
     );

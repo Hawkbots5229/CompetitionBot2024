@@ -23,7 +23,7 @@ public class AutonomousDriveDistance extends Command {
 
     this.s_robotDrive = s_robotDrive;
     this.distance = distance;
-    this.speed = speed;
+    this.speed = -speed;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotDrive);
