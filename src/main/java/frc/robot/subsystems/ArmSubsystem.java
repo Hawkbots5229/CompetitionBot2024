@@ -24,6 +24,7 @@ public class ArmSubsystem extends SubsystemBase {
     new CANSparkMax(ArmPivotConstants.kLeftMotorPort, MotorType.kBrushless);
 
   private final RelativeEncoder m_rightEncoder = m_right.getEncoder();
+  private final RelativeEncoder m_leftEncoder = m_left.getEncoder();
 
   // Using a TrapezoidProfile PIDController to allow for smooth turning
   private final ProfiledPIDController m_turningPIDController =
@@ -40,7 +41,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     m_right.restoreFactoryDefaults();
 
-    m_right.setInverted(ArmPivotConstants.kLeftMotorInverted);
+    m_right.setInverted(ArmPivotConstants.kRightMotorInverted);
+    //m_rightEncoder.setInverted(ArmPivotConstants.kRightMotorInverted);
     m_right.setIdleMode(ArmPivotConstants.kIdleMode);
     m_right.enableVoltageCompensation(ArmPivotConstants.maxVoltage);
     m_right.setSmartCurrentLimit(ArmPivotConstants.kCurrentLimit);
@@ -48,11 +50,12 @@ public class ArmSubsystem extends SubsystemBase {
     m_left.restoreFactoryDefaults();
 
     m_left.setInverted(ArmPivotConstants.kLeftMotorInverted);
+    //m_leftEncoder.setInverted(ArmPivotConstants.kLeftMotorInverted);
     m_left.setIdleMode(ArmPivotConstants.kIdleMode);
     m_left.enableVoltageCompensation(ArmPivotConstants.maxVoltage);
     m_left.setSmartCurrentLimit(ArmPivotConstants.kCurrentLimit);
 
-    m_left.follow(m_right);
+    //m_left.follow(m_right);
 
     resetEncoders();
 
@@ -69,6 +72,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void resetEncoders() {
 
     m_rightEncoder.setPosition(0);
+    m_leftEncoder.setPosition(0);
   }
 
   /** Gets the current angle of the arm.
@@ -79,7 +83,9 @@ public class ArmSubsystem extends SubsystemBase {
    * @implNote ArmPivotConstants.kEncoderRevToArmRads
    */
   public double getAngle() {
-    return m_rightEncoder.getPosition() * ArmPivotConstants.kEncoderRevToArmRads;
+    //System.out.println("RightPos: " + m_rightEncoder.getPosition());
+    //System.out.println("LeftPos: " + -m_leftEncoder.getPosition());
+    return ((m_rightEncoder.getPosition() + m_leftEncoder.getPosition())/2.0) * ArmPivotConstants.kEncoderRevToArmRads;
   }
 
   /** Sets target angle of the arm.
@@ -95,6 +101,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void setAngle(double tarAngle) {
     double output = m_turningPIDController.calculate(getAngle(), tarAngle);
     m_right.set(output);
+    m_left.set(output);
   }
 
   /** Stops the arm motor.
