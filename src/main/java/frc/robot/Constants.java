@@ -219,5 +219,7 @@ public final class Constants {
     public static final IdleMode kIdleMode = IdleMode.kCoast;
     public static final double maxVoltage = 12.0;
     public static final int kCurrentLimit = 40;
+    public static final double kMaxUpperOutput = 1.0;
+    public static final double kMaxLowerOutput = 1.0;
   }
 }

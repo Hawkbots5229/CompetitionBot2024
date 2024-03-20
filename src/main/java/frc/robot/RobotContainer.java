@@ -16,14 +16,17 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.dflt.ArmDefaultCommand;
 import frc.robot.commands.dflt.DrivetrainDefaultCommand;
 import frc.robot.commands.dflt.IntakeDefaultCommand;
+import frc.robot.commands.dflt.ShootDefaultCommand;
 import frc.robot.library.ArmController;
 import frc.robot.commands.ArmSetPosCommand;
 import frc.robot.commands.IntakeSetSpdCommand;
+import frc.robot.commands.ShootSetSpdCommand;
 import frc.robot.commands.auton.tasks.AutonomousCrossLine;
 import frc.robot.commands.auton.tasks.AutonomousDontMove;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class RobotContainer {
   // The robot's subsystems
@@ -34,6 +37,8 @@ public class RobotContainer {
   public static ArmSubsystem m_robotArm = new ArmSubsystem();
   private ArmDefaultCommand armDefaultCommand = new ArmDefaultCommand(m_robotArm);
   public static ArmController l_armPos = new ArmController(ArmSubsystem.ArmPos.kHome);
+  public static ShooterSubsystem m_robotShoot = new ShooterSubsystem();
+  private ShootDefaultCommand shootDefaultCommand = new ShootDefaultCommand(m_robotShoot);
 
   // The driver's controller
   public static XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -59,6 +64,7 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(drivetrainDefaultCommand);
     m_robotIntake.setDefaultCommand(intakeDefaultCommand);
     m_robotArm.setDefaultCommand(armDefaultCommand);
+    m_robotShoot.setDefaultCommand(shootDefaultCommand);
   }
 
   private void configureBindings() {
@@ -66,10 +72,10 @@ public class RobotContainer {
     // Intake Wheels: PovUp-Out PovDown-In
     
     new POVButton(m_mechController, OIConstants.kUpDPad)
-      .onTrue(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kIn))
+      .onTrue(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kOut))
       .onFalse(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kOff));     
     new POVButton(m_mechController, OIConstants.kDownDPad)
-      .onTrue(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kOut))
+      .onTrue(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kIn))
       .onFalse(new IntakeSetSpdCommand(m_robotIntake, IntakeSubsystem.intakeDir.kOff));
     
     // Arm: Y-Up Position A-Down Position X-Middle Position
@@ -79,6 +85,11 @@ public class RobotContainer {
       .onTrue(new ArmSetPosCommand(ArmSubsystem.ArmPos.kExtend));
     new JoystickButton(m_mechController, Button.kX.value)
       .onTrue(new ArmSetPosCommand(ArmSubsystem.ArmPos.kMid));
+
+    new JoystickButton(m_mechController, Button.kRightBumper.value)
+      .onTrue(new ShootSetSpdCommand(m_robotShoot, ShooterSubsystem.shootDir.kOut));
+    new JoystickButton(m_mechController, Button.kLeftBumper.value)
+      .onTrue(new ShootSetSpdCommand(m_robotShoot, ShooterSubsystem.shootDir.kIn));
     
   }
 

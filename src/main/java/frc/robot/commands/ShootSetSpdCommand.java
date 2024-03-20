@@ -5,19 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootSetSpdCommand extends Command {
 
   private final ShooterSubsystem s_robotShooter;
-  private final double speed;
+  private final ShooterSubsystem.shootDir direction;
 
   /** Creates a new ShootSetSpdCommand. */
-  public ShootSetSpdCommand(ShooterSubsystem s_robotShooter, double speed) {
+  public ShootSetSpdCommand(ShooterSubsystem s_robotShooter, ShooterSubsystem.shootDir direction) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotShooter);
     this.s_robotShooter = s_robotShooter;  
-    this.speed = speed;
+    this.direction = direction;
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +28,19 @@ public class ShootSetSpdCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_robotShooter.setTargetOutput(speed);
+    switch(direction) {
+      case kIn: 
+        s_robotShooter.wheelsIn();
+        break;
+      case kOut: 
+        s_robotShooter.wheelsOut();
+        break;
+      case kOff:
+        s_robotShooter.stopMotors();
+        break;
+      default:
+        throw new AssertionError("Illegal value: " + direction);   
+    };
   }
 
   // Called once the command ends or is interrupted.

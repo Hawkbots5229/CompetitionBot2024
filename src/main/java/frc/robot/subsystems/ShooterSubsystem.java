@@ -9,9 +9,12 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
+
+  public enum shootDir {kIn, kOut, kOff};
 
   private final CANSparkMax m_right =
     new CANSparkMax(ShooterConstants.kRightMotorPort, MotorType.kBrushless);
@@ -36,19 +39,44 @@ public class ShooterSubsystem extends SubsystemBase {
     m_left.setIdleMode(ShooterConstants.kIdleMode);
     m_left.enableVoltageCompensation(ShooterConstants.maxVoltage);
     m_left.setSmartCurrentLimit(ShooterConstants.kCurrentLimit);
-
-    m_left.follow(m_right);
   }
 
-   /** Sets the desired speed of the shooter motors.
+  /** Sets the desired speed of the shooter motors.
    * 
    * @return Void
    * @param output The speed to set. Value should be between -1.0 and 1.0.
    * @implNote com.revrobotics.CANSparkMax.set()
    * 
    */
-  public void setTargetOutput(double output) {
-    m_right.set(output);
+  public void setTargetOutput(double upperOutput, double lowerOutput) {
+    m_right.set(lowerOutput);
+    m_left.set(upperOutput);
+  }
+
+  /** Spins shooter to grab items.
+   * 
+   * @return Void
+   * @param None
+   * @implNote setTargetOutput()
+   * @implNote ShooterConstants.kMaxUpperOutput
+   * @implNote ShooterConstants.kMaxLowerOutput
+   * 
+   */
+  public void wheelsIn() {
+    setTargetOutput(ShooterConstants.kMaxUpperOutput, ShooterConstants.kMaxLowerOutput);
+  }
+  
+  /** Spins shooter to eject items.
+   * 
+   * @return Void
+   * @param None
+   * @implNote setTargetOutput()
+   * @implNote ShooterConstants.kMaxUpperOutput
+   * @implNote ShooterConstants.kMaxLowerOutput
+   * 
+   */
+  public void wheelsOut() {
+    setTargetOutput(-ShooterConstants.kMaxUpperOutput, -ShooterConstants.kMaxLowerOutput);
   }
 
 /** Gets the current angle of the shooter.

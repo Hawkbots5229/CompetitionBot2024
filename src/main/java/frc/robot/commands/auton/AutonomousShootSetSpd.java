@@ -12,15 +12,15 @@ public class AutonomousShootSetSpd extends Command {
 
   private final Timer tmr = new Timer();
   private final ShooterSubsystem s_robotShoot;
-  private final double speed;
+  ShooterSubsystem.shootDir direction;
   private final double time;  
 
   /** Creates a new AutonomousShootSetSpd. */
-  public AutonomousShootSetSpd(ShooterSubsystem s_robotShoot, double speed, double time) {
+  public AutonomousShootSetSpd(ShooterSubsystem s_robotShoot, ShooterSubsystem.shootDir direction, double time) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(s_robotShoot);
     this.s_robotShoot = s_robotShoot;
-    this.speed = speed;
+    this.direction = direction;
     this.time = time;
   }
 
@@ -34,7 +34,19 @@ public class AutonomousShootSetSpd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_robotShoot.setTargetOutput(speed);
+    switch(direction) {
+      case kIn: 
+        s_robotShoot.wheelsIn();
+        break;
+      case kOut: 
+        s_robotShoot.wheelsOut();
+        break;
+      case kOff:
+        s_robotShoot.stopMotors();
+        break;
+      default:
+        throw new AssertionError("Illegal value: " + direction);   
+    };
   }
 
   // Called once the command ends or is interrupted.
