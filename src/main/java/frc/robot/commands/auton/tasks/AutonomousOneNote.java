@@ -30,7 +30,7 @@ public class AutonomousOneNote extends SequentialCommandGroup {
     new AutonomousDriveDistance(s_robotDrive, 20, -.5),
     new AutonomousDriveStop(s_robotDrive),
     new AutonomousArmSetPos(s_robotArm, ArmPos.kMid),
-    new AutonomousShootSetSpd(s_robotShooter, 1, 2),
+    new AutonomousShootSetSpd(s_robotShooter, ShooterSubsystem.shootDir.kOut, 2),
     new AutonomousDriveDistance(s_robotDrive, 150, .5),
     new AutonomousDriveStop(s_robotDrive)
     );

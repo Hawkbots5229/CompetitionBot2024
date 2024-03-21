@@ -16,7 +16,7 @@ import frc.robot.Constants.ArmPivotConstants;
 
 public class ArmSubsystem extends SubsystemBase {
 
-  public enum ArmPos{kHome, kExtend, kMid};
+  public enum ArmPos{kHome, kExtend, kMid, kFloor};
 
   private final CANSparkMax m_right =
     new CANSparkMax(ArmPivotConstants.kRightMotorPort, MotorType.kBrushless);

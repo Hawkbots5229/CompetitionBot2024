@@ -30,7 +30,7 @@ public class AutonomousTwoNote extends SequentialCommandGroup {
       new AutonomousDriveDistance(s_robotDrive, 20, -.5),
       new AutonomousDriveStop(s_robotDrive),
       new AutonomousArmSetPos(s_robotArm, ArmPos.kMid),
-      new AutonomousShootSetSpd(s_robotShooter, 1, 2),
+      new AutonomousShootSetSpd(s_robotShooter, ShooterSubsystem.shootDir.kOut, 2),
       new AutonomousDriveDistance(s_robotDrive, 59, .5),
       new AutonomousDriveStop(s_robotDrive),
       new AutonomousArmSetPos(s_robotArm, ArmPos.kHome),
@@ -38,7 +38,7 @@ public class AutonomousTwoNote extends SequentialCommandGroup {
       new AutonomousArmSetPos(s_robotArm, ArmPos.kMid),
       new AutonomousDriveDistance(s_robotDrive, 59, -.5),
       new AutonomousDriveStop(s_robotDrive),
-      new AutonomousShootSetSpd(s_robotShooter, 1, 2)
+      new AutonomousShootSetSpd(s_robotShooter, ShooterSubsystem.shootDir.kOut, 2)
     );
   }
 }

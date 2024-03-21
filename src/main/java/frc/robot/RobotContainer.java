@@ -49,7 +49,7 @@ public class RobotContainer {
   public RobotContainer() {
 
     // Create camera servers
-    //CameraServer.startAutomaticCapture("Claw Camera", 0);
+    CameraServer.startAutomaticCapture("Claw Camera", 0);
     //CameraServer.startAutomaticCapture("Drive Camera", 1);
     
     // Configure the button bindings
@@ -85,11 +85,14 @@ public class RobotContainer {
       .onTrue(new ArmSetPosCommand(ArmSubsystem.ArmPos.kExtend));
     new JoystickButton(m_mechController, Button.kX.value)
       .onTrue(new ArmSetPosCommand(ArmSubsystem.ArmPos.kMid));
+    new JoystickButton(m_mechController, Button.kB.value)
+      .onTrue(new ArmSetPosCommand(ArmSubsystem.ArmPos.kFloor));
 
-    new JoystickButton(m_mechController, Button.kRightBumper.value)
-      .onTrue(new ShootSetSpdCommand(m_robotShoot, ShooterSubsystem.shootDir.kOut));
     new JoystickButton(m_mechController, Button.kLeftBumper.value)
-      .onTrue(new ShootSetSpdCommand(m_robotShoot, ShooterSubsystem.shootDir.kIn));
+      .toggleOnTrue(new ShootSetSpdCommand(m_robotShoot, ShooterSubsystem.shootDir.kOut));    
+    new JoystickButton(m_mechController, Button.kRightBumper.value)
+      .onTrue(new ShootSetSpdCommand(m_robotShoot, ShooterSubsystem.shootDir.kIn))
+      .onFalse(new ShootSetSpdCommand(m_robotShoot, ShooterSubsystem.shootDir.kOff));
     
   }
 

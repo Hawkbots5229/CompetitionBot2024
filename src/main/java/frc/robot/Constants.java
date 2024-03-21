@@ -29,30 +29,30 @@ public final class Constants {
     public static final int kFrontRightDriveMotorPort = 43;
     public static final int kRearRightDriveMotorPort = 41;
 
-    public static final boolean kFrontLeftDriveMotorReversed = true;
-    public static final boolean kRearLeftDriveMotorReversed = true;
-    public static final boolean kFrontRightDriveMotorReversed = true;
-    public static final boolean kRearRightDriveMotorReversed = true;
+    public static final boolean kFrontLeftDriveMotorReversed = false;
+    public static final boolean kRearLeftDriveMotorReversed = false;
+    public static final boolean kFrontRightDriveMotorReversed = false;
+    public static final boolean kRearRightDriveMotorReversed = false;
 
     public static final int kFrontLeftTurningMotorPort = 32;
     public static final int kRearLeftTurningMotorPort = 30;
     public static final int kFrontRightTurningMotorPort = 33;
     public static final int kRearRightTurningMotorPort = 31;
 
-    public static final boolean kFrontLeftTurningMotorReversed = false;
-    public static final boolean kRearLeftTurningMotorReversed = false;
-    public static final boolean kFrontRightTurningMotorReversed = false;
-    public static final boolean kRearRightTurningMotorReversed = false;
+    public static final boolean kFrontLeftTurningMotorReversed = true;
+    public static final boolean kRearLeftTurningMotorReversed = true;
+    public static final boolean kFrontRightTurningMotorReversed = true;
+    public static final boolean kRearRightTurningMotorReversed = true;
 
     public static final int kFrontLeftTurningEncoderPorts = 52;
     public static final int kRearLeftTurningEncoderPorts = 50;
     public static final int kFrontRightTurningEncoderPorts = 53;
     public static final int kRearRightTurningEncoderPorts = 51;
 
-    public static final boolean kFrontLeftTurningEncoderReversed = true;
-    public static final boolean kRearLeftTurningEncoderReversed = true;
-    public static final boolean kFrontRightTurningEncoderReversed = true;
-    public static final boolean kRearRightTurningEncoderReversed = true;
+    public static final boolean kFrontLeftTurningEncoderReversed = false;
+    public static final boolean kRearLeftTurningEncoderReversed = false;
+    public static final boolean kFrontRightTurningEncoderReversed = false;
+    public static final boolean kRearRightTurningEncoderReversed = false;
 
     // Distance between centers of right and left wheels on robot
     public static final double kTrackWidth = 0.65405;
@@ -95,7 +95,7 @@ public final class Constants {
     kFrontLeftTurningMotorReversed, 
     kFrontLeftTurningEncoderPorts,
     kFrontLeftTurningEncoderReversed,
-    -0.398, //-0.6
+    -0.606, //-0.398
     kuseAbsEnc);
 
     public static final SwerveData SDFrontRight = new SwerveData("FR", 
@@ -105,7 +105,7 @@ public final class Constants {
     kFrontRightTurningMotorReversed, 
     kFrontRightTurningEncoderPorts,
     kFrontRightTurningEncoderReversed,
-    -0.970, //-0.029
+    -0.024, //-0.970
     kuseAbsEnc);
 
   public static final SwerveData SDRearLeft = new SwerveData("RL", 
@@ -115,7 +115,7 @@ public final class Constants {
     kRearLeftTurningMotorReversed, 
     kRearLeftTurningEncoderPorts,
     kRearLeftTurningEncoderReversed,
-    -0.370, //-0.627
+    -0.632, //-0.370
     kuseAbsEnc);
 
   public static final SwerveData SDRearRight = new SwerveData("RR", 
@@ -125,7 +125,7 @@ public final class Constants {
     kRearRightTurningMotorReversed, 
     kRearRightTurningEncoderPorts, 
     kRearRightTurningEncoderReversed,
-    -0.895, //-0.122
+    -0.124, //-0.895
     kuseAbsEnc);
   }
 
@@ -194,9 +194,10 @@ public final class Constants {
     public static final double kMaxVel = Math.PI/4.0; //RadPerSec
     public static final double kMaxAcc = Math.pow(kMaxVel,2);; //RadPerSecSqrd
 
-    public static final double kHomeLoc = 0.0;
-    public static final double kExtendLoc = 78.0;
-    public static final double kMidLoc = 37.0;
+    public static final double kHomeLoc = -10.0;
+    public static final double kExtendLoc = 95.0;
+    public static final double kMidLoc = 20.0;
+    public static final double kFloorLoc = 65.0;
   }
 
   public static class ClimbConstants {
@@ -214,12 +215,12 @@ public final class Constants {
     public static final int kRightMotorPort = 24;
     public static final int kLeftMotorPort = 25;
 
-    public static final boolean kRightMotorInverted = true;
-    public static final boolean kLeftMotorInverted = false;
+    public static final boolean kRightMotorInverted = false;
+    public static final boolean kLeftMotorInverted = true;
     public static final IdleMode kIdleMode = IdleMode.kCoast;
     public static final double maxVoltage = 12.0;
     public static final int kCurrentLimit = 40;
-    public static final double kMaxUpperOutput = 1.0;
-    public static final double kMaxLowerOutput = 1.0;
+    public static final double kMaxUpperOutput = 0.4;
+    public static final double kMaxLowerOutput = 0.4;
   }
 }

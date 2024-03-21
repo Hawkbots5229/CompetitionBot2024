@@ -77,12 +77,13 @@ public class SwerveModule {
     m_driveMotor.getConfigurator().apply(cfg_driveMotor);
   
     TalonFXConfiguration cfg_turningMotor = new TalonFXConfiguration();
-    cfg_driveMotor.MotorOutput.Inverted = 
-      swerveData.driveMotorInvert
+    cfg_turningMotor.MotorOutput.Inverted = 
+      swerveData.steerMotorInvert
       ? InvertedValue.Clockwise_Positive
       : InvertedValue.CounterClockwise_Positive;
+    System.out.println(swerveData.name + "Invert: " + swerveData.steerMotorInvert);
 
-    m_turningMotor.setNeutralMode(DriveConstants.turnMode);
+    //m_turningMotor.setNeutralMode(DriveConstants.turnMode);
     m_turningMotor.getConfigurator().apply(cfg_turningMotor);
   
     m_turningMotor.setNeutralMode(DriveConstants.turnMode);
