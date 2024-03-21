@@ -93,7 +93,7 @@ public class ClimbSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("ClimberAngle", Math.toDegrees(getAngle()));
+    //SmartDashboard.putNumber("ClimberAngle", Math.toDegrees(getAngle()));
 
   }
 }

@@ -125,7 +125,7 @@ public final class Constants {
     kRearRightTurningMotorReversed, 
     kRearRightTurningEncoderPorts, 
     kRearRightTurningEncoderReversed,
-    -0.124, //-0.895
+    -0.544, //-0.895
     kuseAbsEnc);
   }
 

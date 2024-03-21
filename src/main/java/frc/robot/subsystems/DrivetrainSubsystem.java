@@ -298,10 +298,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     updateOdometry();
+    /*
     SmartDashboard.putNumber("RobotPitch", getRobotPitch());
     m_frontLeft.sendData();
     m_frontRight.sendData();
     m_rearLeft.sendData();
     m_rearRight.sendData();
+    */
   }
 }

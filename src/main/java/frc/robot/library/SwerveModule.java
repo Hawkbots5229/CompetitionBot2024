@@ -81,7 +81,6 @@ public class SwerveModule {
       swerveData.steerMotorInvert
       ? InvertedValue.Clockwise_Positive
       : InvertedValue.CounterClockwise_Positive;
-    System.out.println(swerveData.name + "Invert: " + swerveData.steerMotorInvert);
 
     //m_turningMotor.setNeutralMode(DriveConstants.turnMode);
     m_turningMotor.getConfigurator().apply(cfg_turningMotor);
@@ -280,10 +279,12 @@ public class SwerveModule {
    * @param None
    */
   public void sendData(){
+    
     SmartDashboard.putNumber(m_swerveData.name + "SteerMotorAngle", getSteerMotorAngle());
     SmartDashboard.putNumber(m_swerveData.name + "CANcoderAngle", getSwerveAngle());
     SmartDashboard.putNumber(m_swerveData.name + "WheelAngle", Math.toDegrees(getSteerAngle()));
     SmartDashboard.putNumber(m_swerveData.name + "DriveDistance", getDriveDistanceInches());
     SmartDashboard.putNumber(m_swerveData.name + "DriveVelocity", getDriveVelocity());
+    
   }
 }
