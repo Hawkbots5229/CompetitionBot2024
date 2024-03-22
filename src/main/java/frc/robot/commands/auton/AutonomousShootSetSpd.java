@@ -27,7 +27,6 @@ public class AutonomousShootSetSpd extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    tmr.reset();
     tmr.start();
   }
 
@@ -53,6 +52,8 @@ public class AutonomousShootSetSpd extends Command {
   @Override
   public void end(boolean interrupted) {
     s_robotShoot.stopMotors();
+    tmr.stop();
+    tmr.reset();
   }
 
   // Returns true when the command should end.

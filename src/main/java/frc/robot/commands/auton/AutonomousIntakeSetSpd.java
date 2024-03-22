@@ -41,7 +41,9 @@ public class AutonomousIntakeSetSpd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_intake.setTargetOutput(speed);
+    if(tmr.get() >= 5) {
+      s_intake.setTargetOutput(speed);
+    }
   }
 
   // Called once the command ends or is interrupted.

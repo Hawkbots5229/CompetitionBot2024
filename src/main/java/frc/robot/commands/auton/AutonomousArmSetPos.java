@@ -5,6 +5,7 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmPivotConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ArmSubsystem;
 
@@ -31,12 +32,14 @@ public class AutonomousArmSetPos extends Command {
   @Override
   public void initialize() {
     RobotContainer.l_armPos.setTargetPosition(pos);
+    //s_robotArm.setAngle(RobotContainer.l_armPos.getTargetPosition());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     s_robotArm.setAngle(RobotContainer.l_armPos.getTargetPosition());
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -48,5 +51,6 @@ public class AutonomousArmSetPos extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;}
+    //System.out.println(Math.abs(RobotContainer.l_armPos.getTargetPosition() - s_robotArm.getAngle()));
+    return Math.abs(RobotContainer.l_armPos.getTargetPosition() - s_robotArm.getAngle()) <= 0.0005;}
 }

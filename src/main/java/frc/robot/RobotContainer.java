@@ -23,6 +23,7 @@ import frc.robot.commands.IntakeSetSpdCommand;
 import frc.robot.commands.ShootSetSpdCommand;
 import frc.robot.commands.auton.tasks.AutonomousCrossLine;
 import frc.robot.commands.auton.tasks.AutonomousDontMove;
+import frc.robot.commands.auton.tasks.AutonomousOneNote;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -58,6 +59,8 @@ public class RobotContainer {
     // Setup SmartDashboard Auton options
     sc_autonSelect.setDefaultOption("Don't Move", new AutonomousDontMove(m_robotDrive, m_robotIntake));
     sc_autonSelect.addOption("CrossLine", new AutonomousCrossLine(m_robotDrive, m_robotIntake));
+    sc_autonSelect.addOption("ShootCrossLine", new AutonomousOneNote(m_robotArm, m_robotDrive, m_robotIntake, m_robotShoot));
+
     SmartDashboard.putData("Auton Selection", sc_autonSelect);
 
     // Configure default commands

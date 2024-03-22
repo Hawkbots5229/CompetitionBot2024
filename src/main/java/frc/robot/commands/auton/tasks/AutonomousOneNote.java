@@ -11,6 +11,7 @@ import frc.robot.commands.auton.AutonomousDriveStop;
 //import frc.robot.commands.auton.AutonomousIntakeSetSpd;
 import frc.robot.commands.auton.AutonomousResetEncoders;
 import frc.robot.commands.auton.AutonomousShootSetSpd;
+import frc.robot.commands.auton.AutonomousShootSpeaker;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -27,11 +28,9 @@ public class AutonomousOneNote extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     new AutonomousResetEncoders(s_robotDrive),
-    new AutonomousDriveDistance(s_robotDrive, 20, -.5),
-    new AutonomousDriveStop(s_robotDrive),
-    new AutonomousArmSetPos(s_robotArm, ArmPos.kMid),
-    new AutonomousShootSetSpd(s_robotShooter, ShooterSubsystem.shootDir.kOut, 2),
-    new AutonomousDriveDistance(s_robotDrive, 150, .5),
+    //new AutonomousArmSetPos(s_robotArm, ArmPos.kFloor),
+    new AutonomousShootSpeaker(s_intake, s_robotShooter, s_robotArm),
+    new AutonomousDriveDistance(s_robotDrive, 45, 0.8),
     new AutonomousDriveStop(s_robotDrive)
     );
   }

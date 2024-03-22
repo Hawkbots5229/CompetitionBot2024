@@ -141,7 +141,7 @@ public final class Constants {
     public static final double steer_RevPRad = steerRatio/(2.0*Math.PI); 
     
     
-    public static final double driveDistanceCntsPMeter = 49907;
+    public static final double driveDistanceCntsPMeter = 7.73/(0.1016*Math.PI); //49907
     public static final double driveRawVelocityToMPS = 4990.68;
   }
 
@@ -220,7 +220,7 @@ public final class Constants {
     public static final IdleMode kIdleMode = IdleMode.kCoast;
     public static final double maxVoltage = 12.0;
     public static final int kCurrentLimit = 40;
-    public static final double kMaxUpperOutput = 0.4;
+    public static final double kMaxUpperOutput = 0.5;
     public static final double kMaxLowerOutput = 0.4;
   }
 }

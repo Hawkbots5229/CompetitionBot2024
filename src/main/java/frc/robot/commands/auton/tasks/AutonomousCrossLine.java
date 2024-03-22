@@ -27,7 +27,7 @@ public class AutonomousCrossLine extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutonomousResetEncoders(s_robotDrive),
-      new AutonomousDriveDistance(s_robotDrive, 150, 0.8),
+      new AutonomousDriveDistance(s_robotDrive, 45, 0.8),
       new AutonomousDriveStop(s_robotDrive)
     );
   }
