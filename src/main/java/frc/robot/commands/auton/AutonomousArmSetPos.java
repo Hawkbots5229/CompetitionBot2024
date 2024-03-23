@@ -52,5 +52,5 @@ public class AutonomousArmSetPos extends Command {
   @Override
   public boolean isFinished() {
     //System.out.println(Math.abs(RobotContainer.l_armPos.getTargetPosition() - s_robotArm.getAngle()));
-    return Math.abs(RobotContainer.l_armPos.getTargetPosition() - s_robotArm.getAngle()) <= 0.001;}
+    return Math.abs(RobotContainer.l_armPos.getTargetPosition() - s_robotArm.getAngle()) <= 0.005;}
 }

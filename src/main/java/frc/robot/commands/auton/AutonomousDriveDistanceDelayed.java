@@ -51,6 +51,7 @@ public class AutonomousDriveDistanceDelayed extends Command {
   @Override
   public void end(boolean interrupted) {
     s_robotDrive.stopMotors();
+    tmr.stop();
   }
 
   // Returns true when the command should end.

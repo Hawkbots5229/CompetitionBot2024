@@ -30,10 +30,9 @@ public class AutonomousTwoNote extends SequentialCommandGroup {
     addCommands(
     new AutonomousResetEncoders(s_robotDrive),
     new AutonomousShootSpeaker(s_intake, s_robotShooter, s_robotArm),
-    new AutonomousDriveDistance(s_robotDrive, 45, 0.8),
-    new AutonomousDriveStop(s_robotDrive),
+    new AutonomousDriveDistance(s_robotDrive, 39, 0.8),
     new AutonomousPickup(s_robotArm, s_intake, s_robotDrive),
-    new AutonomousDriveDistance(s_robotDrive, 47, -0.8),
+    new AutonomousDriveDistance(s_robotDrive, 41, -0.8),
     new AutonomousShootSpeaker(s_intake, s_robotShooter, s_robotArm)
     );
   }

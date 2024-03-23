@@ -96,7 +96,7 @@ public final class Constants {
     kFrontLeftTurningMotorReversed, 
     kFrontLeftTurningEncoderPorts,
     kFrontLeftTurningEncoderReversed,
-    -0.606, //-0.398
+    -0.862, //-0.398
     kuseAbsEnc);
 
     public static final SwerveData SDFrontRight = new SwerveData("FR", 
@@ -116,7 +116,7 @@ public final class Constants {
     kRearLeftTurningMotorReversed, 
     kRearLeftTurningEncoderPorts,
     kRearLeftTurningEncoderReversed,
-    -0.632, //-0.370
+    -0.424, //-0.370
     kuseAbsEnc);
 
   public static final SwerveData SDRearRight = new SwerveData("RR", 
@@ -197,8 +197,8 @@ public final class Constants {
 
     public static final double kHomeLoc = -10.0;
     public static final double kExtendLoc = 95.0;
-    public static final double kMidLoc = 20.0;
-    public static final double kFloorLoc = 65.0;
+    public static final double kMidLoc = 50.0;
+    public static final double kFloorLoc = 66.0;
   }
 
   public static class ClimbConstants {

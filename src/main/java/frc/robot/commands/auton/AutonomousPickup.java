@@ -19,7 +19,7 @@ public class AutonomousPickup extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new AutonomousArmSetPos(s_robotArm, ArmPos.kFloor),
+    new AutonomousArmSetPos(s_robotArm, ArmPos.kExtend),
     new AutonomousDriveDistanceDelayed(s_robotDrive, 2, 0.8),
     new AutonomousIntakeSetSpdDelayless(s_intake, 1, 3)
     );

@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
@@ -14,6 +16,8 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
 
   public enum shootDir {kIn, kOut, kOff};
+  public Boolean wheelsIn = false;
+  public Boolean wheelsOut = false;
 
   private final CANSparkMax m_right =
     new CANSparkMax(ShooterConstants.kRightMotorPort, MotorType.kBrushless);
@@ -63,6 +67,8 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void wheelsIn() {
     setTargetOutput(ShooterConstants.kMaxUpperOutput, ShooterConstants.kMaxLowerOutput);
+    wheelsIn = true;
+    wheelsOut = false;
   }
   
   /** Spins shooter to eject items.
@@ -76,6 +82,8 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void wheelsOut() {
     setTargetOutput(-ShooterConstants.kMaxUpperOutput, -ShooterConstants.kMaxLowerOutput);
+    wheelsIn = false;
+    wheelsOut = true;
   }
 
 /** Gets the current angle of the shooter.
@@ -109,10 +117,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
     m_right.stopMotor();
     m_left.stopMotor();
+    wheelsIn = false;
+    wheelsOut = false;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Shooter Wheels In", wheelsIn);
+    SmartDashboard.putBoolean("Shooter Wheels Out", wheelsOut);
   }
 }

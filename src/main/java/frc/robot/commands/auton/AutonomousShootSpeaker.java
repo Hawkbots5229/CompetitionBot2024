@@ -19,9 +19,9 @@ public class AutonomousShootSpeaker extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousArmSetPos(s_robotArm, ArmPos.kExtend),
-      new AutonomousShootSetSpd(s_robotShooter, ShooterSubsystem.shootDir.kOut, 8),
-      new AutonomousIntakeSetSpd(s_intake, -0.8, 8)
+      new AutonomousArmSetPos(s_robotArm, ArmPos.kFloor),
+      new AutonomousShootSetSpd(s_robotShooter, ShooterSubsystem.shootDir.kOut, 5),
+      new AutonomousIntakeSetSpd(s_intake, -0.8, 5)
     );
   }
 }
