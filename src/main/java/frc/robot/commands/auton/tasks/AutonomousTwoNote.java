@@ -9,8 +9,10 @@ import frc.robot.commands.auton.AutonomousArmSetPos;
 import frc.robot.commands.auton.AutonomousDriveDistance;
 import frc.robot.commands.auton.AutonomousDriveStop;
 import frc.robot.commands.auton.AutonomousIntakeSetSpd;
+import frc.robot.commands.auton.AutonomousPickup;
 import frc.robot.commands.auton.AutonomousResetEncoders;
 import frc.robot.commands.auton.AutonomousShootSetSpd;
+import frc.robot.commands.auton.AutonomousShootSpeaker;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -26,19 +28,13 @@ public class AutonomousTwoNote extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousResetEncoders(s_robotDrive),
-      new AutonomousDriveDistance(s_robotDrive, 20, -.5),
-      new AutonomousDriveStop(s_robotDrive),
-      new AutonomousArmSetPos(s_robotArm, ArmPos.kMid),
-      new AutonomousShootSetSpd(s_robotShooter, ShooterSubsystem.shootDir.kOut, 2),
-      new AutonomousDriveDistance(s_robotDrive, 59, .5),
-      new AutonomousDriveStop(s_robotDrive),
-      new AutonomousArmSetPos(s_robotArm, ArmPos.kHome),
-      new AutonomousIntakeSetSpd(s_intake, 1, 2),
-      new AutonomousArmSetPos(s_robotArm, ArmPos.kMid),
-      new AutonomousDriveDistance(s_robotDrive, 59, -.5),
-      new AutonomousDriveStop(s_robotDrive),
-      new AutonomousShootSetSpd(s_robotShooter, ShooterSubsystem.shootDir.kOut, 2)
+    new AutonomousResetEncoders(s_robotDrive),
+    new AutonomousShootSpeaker(s_intake, s_robotShooter, s_robotArm),
+    new AutonomousDriveDistance(s_robotDrive, 45, 0.8),
+    new AutonomousDriveStop(s_robotDrive),
+    new AutonomousPickup(s_robotArm, s_intake, s_robotDrive),
+    new AutonomousDriveDistance(s_robotDrive, 47, -0.8),
+    new AutonomousShootSpeaker(s_intake, s_robotShooter, s_robotArm)
     );
   }
 }
