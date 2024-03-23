@@ -22,7 +22,8 @@ import frc.robot.library.SwerveData;
 public final class Constants {
   public static final class DriveConstants {
 
-    public static final String kCanBus = "CANivore";
+    //public static final String kCanBus = "CANivore";
+    public static final String kCanBus = "rio";
 
     public static final int kFrontLeftDriveMotorPort = 42;
     public static final int kRearLeftDriveMotorPort = 40;
@@ -78,7 +79,7 @@ public final class Constants {
     public static final double rotToleranceVel = 10; // Deg/sec
     public static final double rotMaxOutput  = 0.5;
     public static final double stickDeadband = 0.1;
-    public static final double speedScale = 0.6;
+    public static final double speedScale = 0.70;
     public static final double rotationScale = 0.25;
     public static final double MetersPerInch = 1/39.37008;
     public static final int kCurrentLimit = 40;

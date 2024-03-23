@@ -85,7 +85,8 @@ public class ArmSubsystem extends SubsystemBase {
   public double getAngle() {
     //System.out.println("RightPos: " + m_rightEncoder.getPosition());
     //System.out.println("LeftPos: " + -m_leftEncoder.getPosition());
-    return ((m_rightEncoder.getPosition() + m_leftEncoder.getPosition())/2.0) * ArmPivotConstants.kEncoderRevToArmRads;
+    //return ((m_rightEncoder.getPosition() + m_leftEncoder.getPosition())/2.0) * ArmPivotConstants.kEncoderRevToArmRads;
+    return m_leftEncoder.getPosition() * ArmPivotConstants.kEncoderRevToArmRads;
   }
 
   /** Sets target angle of the arm.
