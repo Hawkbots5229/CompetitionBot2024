@@ -86,6 +86,18 @@ public class ShooterSubsystem extends SubsystemBase {
     wheelsOut = true;
   }
 
+  public void wheelsInLow() {
+    setTargetOutput(ShooterConstants.kMaxUpperOutput * .5, ShooterConstants.kMaxLowerOutput * .5);
+    wheelsIn = true;
+    wheelsOut = false;
+  }
+
+  public void wheelsOutLow() {
+    setTargetOutput(-ShooterConstants.kMaxUpperOutput * .5, -ShooterConstants.kMaxLowerOutput * .5);
+    wheelsIn = false;
+    wheelsOut = true;
+  }
+
 /** Gets the current angle of the shooter.
  * 
  * @return Current arm angle (Radians)
