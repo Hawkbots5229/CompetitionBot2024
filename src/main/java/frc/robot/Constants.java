@@ -88,7 +88,9 @@ public final class Constants {
     public static final boolean kGyroReversed = true;
 
     public static final boolean kuseAbsEnc = true;
-
+// if we have to replace a swerve module we nneed to change the number to 0 
+// and then align the wheel and see the values from the driver station and put those numbers in here
+// there are going to be negative numbers
     public static final SwerveData SDFrontLeft = new SwerveData("FL", 
     kFrontLeftDriveMotorPort, 
     kFrontLeftDriveMotorReversed, 
@@ -96,7 +98,7 @@ public final class Constants {
     kFrontLeftTurningMotorReversed, 
     kFrontLeftTurningEncoderPorts,
     kFrontLeftTurningEncoderReversed,
-    -0.862, //-0.398
+    -0.862, //-0.398 
     kuseAbsEnc);
 
     public static final SwerveData SDFrontRight = new SwerveData("FR", 

@@ -52,7 +52,7 @@ public class RobotContainer {
 
     // Create camera servers
     CameraServer.startAutomaticCapture("Claw Camera", 0);
-    //.startAutomaticCapture("Drive Camera", 1);
+    CameraServer.startAutomaticCapture("Drive Camera", 1);
     
     // Configure the button bindings
     configureBindings();

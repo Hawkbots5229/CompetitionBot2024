@@ -46,8 +46,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
           });
 
-  // Sets if robot drive is field relative
-  public boolean isFieldRelative = false;
+  // Sets if robot drive is field relative Change it to True
+  public boolean isFieldRelative = false; 
 
   /** Creates a new DriveSubsystem. */
   public DrivetrainSubsystem() {
