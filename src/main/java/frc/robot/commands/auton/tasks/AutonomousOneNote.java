@@ -5,6 +5,7 @@
 package frc.robot.commands.auton.tasks;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.ZeroHeading;
 import frc.robot.commands.auton.AutonomousArmSetPos;
 import frc.robot.commands.auton.AutonomousDriveDistance;
 import frc.robot.commands.auton.AutonomousDriveStop;
@@ -27,6 +28,7 @@ public class AutonomousOneNote extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+    new ZeroHeading(s_robotDrive),
     new AutonomousResetEncoders(s_robotDrive),
     //new AutonomousArmSetPos(s_robotArm, ArmPos.kFloor),
     new AutonomousShootSpeaker(s_intake, s_robotShooter, s_robotArm),

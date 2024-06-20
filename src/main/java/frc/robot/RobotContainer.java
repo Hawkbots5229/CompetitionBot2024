@@ -23,6 +23,7 @@ import frc.robot.commands.ClimbSetSpdCommand;
 import frc.robot.commands.IntakeSetSpdCommand;
 import frc.robot.commands.ShootSetSpdCommand;
 import frc.robot.commands.ShootSetSpdLowCommand;
+import frc.robot.commands.ZeroHeading;
 import frc.robot.commands.auton.tasks.AutonomousCrossLine;
 import frc.robot.commands.auton.tasks.AutonomousDontMove;
 import frc.robot.commands.auton.tasks.AutonomousOneNote;
@@ -56,7 +57,7 @@ public class RobotContainer {
 
     // Create camera servers
     CameraServer.startAutomaticCapture("Claw Camera", 0);
-    CameraServer.startAutomaticCapture("Drive Camera", 1);
+    //CameraServer.startAutomaticCapture("Drive Camera", 1);
     
     // Configure the button bindings
     configureBindings();
@@ -106,11 +107,14 @@ public class RobotContainer {
       .toggleOnTrue(new ShootSetSpdLowCommand(m_robotShoot, ShooterSubsystem.shootDir.kOut));
     
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
-      .onTrue(new ClimbSetSpdCommand(m_robotClimb, 1))
+      .onTrue(new ClimbSetSpdCommand(m_robotClimb, 0.5))
       .onFalse(new ClimbSetSpdCommand(m_robotClimb, 0));
     new JoystickButton(m_driverController, Button.kRightBumper.value)
-      .onTrue(new ClimbSetSpdCommand(m_robotClimb, -1))
+      .onTrue(new ClimbSetSpdCommand(m_robotClimb, -0.5))
       .onFalse(new ClimbSetSpdCommand(m_robotClimb, 0));
+
+    new JoystickButton(m_driverController, Button.kA.value)
+      .onTrue(new ZeroHeading(m_robotDrive));
     
 
   }

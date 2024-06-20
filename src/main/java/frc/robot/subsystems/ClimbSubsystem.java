@@ -26,7 +26,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     m_right.restoreFactoryDefaults();
 
-    m_right.setInverted(ClimbConstants.kLeftMotorInverted);
+    m_right.setInverted(ClimbConstants.kRightMotorInverted);
     m_right.setIdleMode(ClimbConstants.kIdleMode);
     m_right.enableVoltageCompensation(ClimbConstants.maxVoltage);
     m_right.setSmartCurrentLimit(ClimbConstants.kCurrentLimit);

@@ -47,7 +47,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
           });
 
   // Sets if robot drive is field relative Change it to True
-  public boolean isFieldRelative = false; 
+  public boolean isFieldRelative = true; 
 
   /** Creates a new DriveSubsystem. */
   public DrivetrainSubsystem() {
@@ -121,7 +121,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * 
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean isFieldRelative, boolean optimize) {
-    this.isFieldRelative = isFieldRelative;
+    //this.isFieldRelative = isFieldRelative;
+    
     var swerveModuleStates =
         DriveConstants.kDriveKinematics.toSwerveModuleStates(
           isFieldRelative
@@ -171,6 +172,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
    */
   public void zeroHeading() {
     m_gyro.reset();
+    System.out.println("Zero Heading");
   }
 
   /** Returns the heading of the robot.
@@ -266,7 +268,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * 
    */
   public Rotation2d getRobotRotation2D(){
-    double angle = getRobotAngle();
+    double angle = getRobotAngle360();
     return Rotation2d.fromDegrees(angle);
   }
 
@@ -299,7 +301,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     updateOdometry();
     
-    SmartDashboard.putNumber("RobotPitch", getRobotPitch());
+    //SmartDashboard.putNumber("RobotPitch", getRobotPitch());
+    //SmartDashboard.putNumber("Robot Angle", getRobotRotation2D().getDegrees());
+    SmartDashboard.putNumber("Robot Pitch", m_gyro.getPitch());
+    SmartDashboard.putNumber("Robot Roll", m_gyro.getRoll());
+    SmartDashboard.putNumber("Robot Yaw", m_gyro.getYaw());
+    SmartDashboard.putNumber("Robot Rotation", getRobotRotation2D().getDegrees());
+    SmartDashboard.putNumber("Robot Rotation Raw", m_gyro.getRotation2d().getDegrees());
     m_frontLeft.sendData();
     m_frontRight.sendData();
     m_rearLeft.sendData();

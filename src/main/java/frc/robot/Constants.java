@@ -198,7 +198,7 @@ public final class Constants {
     public static final double kMaxAcc = Math.pow(kMaxVel,2);; //RadPerSecSqrd
 
     public static final double kHomeLoc = -10.0;
-    public static final double kExtendLoc = 95.0;
+    public static final double kExtendLoc = 90.0;
     public static final double kMidLoc = 50.0;
     public static final double kFloorLoc = 66.0;
   }
@@ -207,8 +207,8 @@ public final class Constants {
     public static final int kRightMotorPort = 22;
     public static final int kLeftMotorPort = 23;
 
-    public static final boolean kRightMotorInverted = true;
-    public static final boolean kLeftMotorInverted = false;
+    public static final boolean kRightMotorInverted = false;
+    public static final boolean kLeftMotorInverted = true;
     public static final IdleMode kIdleMode = IdleMode.kBrake;
     public static final double maxVoltage = 12.0;
     public static final int kCurrentLimit = 40;

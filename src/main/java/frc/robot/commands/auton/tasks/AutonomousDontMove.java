@@ -5,6 +5,7 @@
 package frc.robot.commands.auton.tasks;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.ZeroHeading;
 import frc.robot.commands.auton.AutonomousDriveStop;
 import frc.robot.commands.auton.AutonomousIntakeSetSpd;
 import frc.robot.commands.auton.AutonomousResetEncoders;
@@ -25,6 +26,7 @@ public class AutonomousDontMove extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new ZeroHeading(s_robotDrive),
       new AutonomousResetEncoders(s_robotDrive),
       new AutonomousIntakeSetSpd(s_intake, -1.0, 0.2),
       new AutonomousDriveStop(s_robotDrive));
