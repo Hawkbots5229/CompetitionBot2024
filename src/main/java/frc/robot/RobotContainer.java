@@ -21,6 +21,7 @@ import frc.robot.library.ArmController;
 import frc.robot.commands.ArmSetPosCommand;
 import frc.robot.commands.ClimbSetSpdCommand;
 import frc.robot.commands.IntakeSetSpdCommand;
+import frc.robot.commands.SetFieldOriented;
 import frc.robot.commands.ShootSetSpdCommand;
 import frc.robot.commands.ShootSetSpdLowCommand;
 import frc.robot.commands.ZeroHeading;
@@ -115,8 +116,8 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, Button.kA.value)
       .onTrue(new ZeroHeading(m_robotDrive));
-    
-
+    new JoystickButton(m_driverController, Button.kB.value)
+      .onTrue(new SetFieldOriented(m_robotDrive));
   }
 
   public Command getAutonomousCommand() {

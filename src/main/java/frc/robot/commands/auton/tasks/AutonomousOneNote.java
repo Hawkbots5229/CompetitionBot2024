@@ -34,6 +34,7 @@ public class AutonomousOneNote extends SequentialCommandGroup {
     new AutonomousShootSpeaker(s_intake, s_robotShooter, s_robotArm),
     new AutonomousDriveDistance(s_robotDrive, 45, 0.8),
     new AutonomousDriveStop(s_robotDrive)
+
     );
   }
 }

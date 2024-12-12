@@ -79,7 +79,7 @@ public final class Constants {
     public static final double rotToleranceVel = 10; // Deg/sec
     public static final double rotMaxOutput  = 0.5;
     public static final double stickDeadband = 0.1;
-    public static final double speedScale = 0.50;
+    public static final double speedScale = 0.80;
     public static final double rotationScale = 0.25;
     public static final double MetersPerInch = 1/39.37008;
     public static final int kCurrentLimit = 40;
@@ -223,7 +223,7 @@ public final class Constants {
     public static final IdleMode kIdleMode = IdleMode.kCoast;
     public static final double maxVoltage = 12.0;
     public static final int kCurrentLimit = 40;
-    public static final double kMaxUpperOutput = 0.5;
-    public static final double kMaxLowerOutput = 0.4;
+    public static final double kMaxUpperOutput = 0.65;
+    public static final double kMaxLowerOutput = 0.55;
   }
 }
